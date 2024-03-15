@@ -22,7 +22,6 @@ export default function CheckBxoThree() {
 
   useEffect(() => {
     if (!aufwandThree) {
-      // Set default value if aufwandOne is empty
       setAufwandThree('low');
       setSelectedValue('low');
     } else {
