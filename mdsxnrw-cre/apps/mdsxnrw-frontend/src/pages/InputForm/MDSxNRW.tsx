@@ -127,7 +127,7 @@ export default function MDSxNRW() {
 
   //request
   const sendSelectedData = async () => {
-    console.log('-------------------------------------------------------');
+    console.log('-----------------------------');
     try {
       const backendUri = process.env.REACT_APP_BACKEND_URL;
       console.log('Backend URI:', backendUri);
