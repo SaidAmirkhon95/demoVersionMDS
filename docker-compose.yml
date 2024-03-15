@@ -1,0 +1,124 @@
+# ####################################################################################################################
+# MDSxNRW Services and Databases
+# ####################################################################################################################
+version: "3.8"
+
+services:
+  mdsxnrw-frontend:
+    image: registry.gitlab.cc-asp.fraunhofer.de/mdsxnrw/mdsxnrw-cre/mdsxnrw-frontend:1.1.1-comingsoon-ger-eng
+    container_name: mdsxnrw-frontend
+    ports:
+      - 80:80
+    environment:
+      - PORT=${FRONTEND_PORT}
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+    networks:
+      - core
+
+  mdsxnrw-backend:
+    image: registry.gitlab.cc-asp.fraunhofer.de/mdsxnrw/mdsxnrw-cre/mdsxnrw-backend:1.0.0-dummy-recommendation
+    container_name: mdsxnrw-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
+    networks:
+      - core
+
+  logto:
+    container_name: logto
+    depends_on:
+      postgres:
+        condition: service_healthy
+    image: svhd/logto:sha-2ad86d5
+    entrypoint: ["sh", "-c", "npm run cli db seed -- --swe && npm start"]
+    ports:
+      - 3001:3001
+      - 3002:3002
+    environment:
+      - TRUST_PROXY_HEADER=1
+      - DB_URL=postgres://admin:admin@postgres:5432/logto
+      # Mandatory for GitPod to map host env to the container, thus GitPod can dynamically configure the public URL of Logto;
+      # Or, you can leverage it for local testing.
+      - ENDPOINT
+      - ADMIN_ENDPOINT
+    networks:
+      - core
+
+  postgres:
+    image: postgres:15.2
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - mdsxnrw-postgres-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_DB}"]
+      interval: 5s
+      retries: 5
+    ports:
+      - 5432:5432
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2GB
+        reservations:
+          cpus: "2"
+          memory: 2GB
+    networks:
+      - core
+
+  # for admin access
+  adminer:
+    image: adminer:4.8.1
+    container_name: adminer
+    restart: always
+    ports:
+      - 8077:8080
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 1GB
+        reservations:
+          cpus: "1"
+          memory: 1GB
+    networks:
+      - core
+
+  keycloak:
+    image: registry.gitlab.cc-asp.fraunhofer.de/mdsxnrw/mdsxnrw-cre/mdsxnrw-keycloak:0.1.2
+    container_name: keycloak
+    depends_on:
+      - postgres
+    environment:
+      # these vars lead to stucking admin loading page
+      #- KC_HOSTNAME=localhost
+      #- KC_HOSTNAME_PORT=8080
+      #- KC_HOSTNAME_STRICT_BACKCHANNEL=true
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres/${POSTGRES_DB}
+      - KC_DB_USERNAME=${POSTGRES_USER}
+      - KC_DB_PASSWORD=${POSTGRES_PASSWORD}
+      - KC_LOG_LEVEL=info
+    ports:
+      - 8090:8080
+    networks:
+      - core
+
+volumes:
+  mdsxnrw-postgres-db-volume:
+    name: mdsxnrw-postgres-db-volume
+
+networks:
+  core:
+    name: core

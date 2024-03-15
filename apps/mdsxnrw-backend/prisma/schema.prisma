@@ -1,0 +1,299 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//generator erd {
+//  provider    = "prisma-erd-generator"
+//  output      = "ERM.svg"
+//  ignoreEnums = true
+//}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// MODELS
+
+// Implicitly any list type is potentially empty (=Null) if not caught by the middleware (indicated explicitly by "Not Null")
+
+model User {
+  // Metadata
+  id                     Int                     @id @default(autoincrement())
+  companyIndustrySectors CompanyIndustrySector[] // Not Null
+  companyLocation        String
+  companyName            String
+  companyType            String
+  companyZipcode         Int?
+  email                  String // external validation
+  forename               String?
+  futureUseOfDs          Boolean?
+  name                   String
+  // CR relevant data
+  companyItExpertsFrom   Int
+  companyItExpertsTo     Int
+  companyItKnowhow       ItKnowhow
+  companySize            CompanySize
+  dataAvailabilities     DataAvailabilities[]
+  dataspaceRoles         DataspaceRoles[]
+  serviceLevel           ServiceLevel[]
+  usagePolicies          UsagePolicies?
+}
+
+model Request {
+  id                     Int                     @id @default(autoincrement())
+  companyIndustrySectors CompanyIndustrySector[] // Not Null
+  companyItExpertsFrom   Int
+  companyItExpertsTo     Int
+  companyItKnowhow       ItKnowhow
+  companyLocation        String
+  companySize            CompanySize
+  companyType            String
+  companyZipcode         Int?
+  dataAvailabilities     DataAvailabilities[]
+  dataspaceRoles         DataspaceRoles[]
+  serviceLevel           ServiceLevel[]
+  usagePolicies          UsagePolicies?
+}
+
+model Connector {
+  // Metadata
+  id                               Int                               @id @default(autoincrement())
+  connectorDescription             String
+  connectorLogo                    String? //base64 encoded picture
+  connectorName                    String                            @unique
+  connectorMaintainer              String
+  connectorType                    ConnectorType
+  connectorVersion                 String
+  connectorWebsite                 String?
+  connectorEmail                   String // external validation 
+  contactForename                  String?
+  contactLocation                  String
+  contactName                      String
+  // CR relevant data
+  deploymentType                   DeploymentType[] // Not Null
+  durationFrom                     Int?
+  durationTo                       Int?
+  durationUnit                     DurationUnit? // Unit of Duration (days, months)
+  openSource                       OpenSource
+  license                          License
+  fte                              FTE
+  selfImplementation               Boolean
+  gui                              Boolean
+  dsSpecificGui                    Boolean
+  cloudNeeded                      Boolean
+  cloud                            Cloud?
+  // targetIndustrySectors can be initialized with null or [] from outside which 
+  // is catched by the middleware and transformed to alle possible InudstrySectors!
+  targetIndustrySectors            CompanyIndustrySector[] // Not Null 
+  targetDataspaceRoles             DataspaceRoles[]
+  itKnowhow                        ItKnowhow
+  payment                          Boolean
+  pricingModel                     PricingModel?
+  price                            Float?
+  paymentInterval                  PaymentInterval?
+  abonnementDescription            String?
+  costCalculationBasis             CostCalculationBasis?
+  tier1Cost                        Float?
+  tier1PaymentInterval             PaymentInterval?
+  tier1AbonnementDescription       String?
+  tier2Cost                        Float?
+  tier2PaymentInterval             PaymentInterval?
+  tier2AbonnementDescription       String?
+  tier3Cost                        Float?
+  tier3PaymentInterval             PaymentInterval?
+  tier3AbonnementDescription       String?
+  tier4Cost                        Float?
+  tier4PaymentInterval             PaymentInterval?
+  tier4AbonnementDescription       String?
+  tier5Cost                        Float?
+  tier5PaymentInterval             PaymentInterval?
+  tier5AbonnementDescription       String?
+  regionalRestrictions             Boolean
+  //volumeRestricted
+  //volumeRestriction
+  hasDocumentation                 Boolean
+  hasSupport                       Boolean
+  basedOnODRL                      Boolean
+  alternativePolicyExpressionModel AlternativePolicyExpressionModel?
+  usedProtocols                    Protocol[] // Not Null
+  trl                              Int
+  references                       String
+  serviceLevel                     ServiceLevel[]
+}
+
+// ENUMS
+
+// convention for numbers and intervals:
+// single numbers start with 'about' since enum values must not start with a digit or underscore
+// intervals start with 'between', 'lessthan' or 'morethan'
+
+//enum Duration {
+//  about_1_day
+//  between_2_to_5_days
+//  about_1_month
+//  between_2_to_4_months
+//  between_4_to_6_months
+//  morethan_6_months
+//}
+
+enum DurationUnit {
+  days
+  months
+}
+
+enum FTE {
+  single_person // 1-2
+  small_team // 3-5
+  large_team // 6-9
+  department // more than 9
+}
+
+//enum CompanyItExperts {
+//  lessthan_10_employees
+//  between_11_to_49_employees
+//  between_50_to_249_employees
+//  morethan_249_employees
+//}
+
+enum ConnectorType {
+  data_connector_framework
+  generic_opensource_solution
+  generic_solution
+  off_the_shelf_solution // ..._offered_as_a_service_or_integrated_in_a_data_related_product (label too long otherwise)
+}
+
+enum License {
+  apache_2_0
+  mit_license
+  bsd_license
+  unlicense
+  mozilla_public_license_2_0
+  eclipse_public_license_2_0
+  gnu_lgpl
+  gnu_agpl
+  gnu_gpl_3
+}
+
+enum OpenSource {
+  opensource
+  opensource_copyleft
+  closedsource
+  closedsource_extendable
+}
+
+enum Cloud {
+  aws
+  microsoft_azure
+  google_cloud
+  ibm_cloud
+  redhat
+  vmware
+  mycloud
+}
+
+enum CostCalculationBasis {
+  file_upload_count
+  size_of_upload // in GB
+  file_download_count
+  size_of_download // in GB
+  number_of_adressed_dataspaces
+}
+
+//enum VolumeRestriction {
+//  morethan_100gb
+//  lessthan_100gb
+//}
+
+enum AlternativePolicyExpressionModel {
+  ind_2_uce
+  lucon
+  degree
+  my_data
+}
+
+enum PaymentInterval {
+  yearly
+  monthly
+  bi_weekly
+  weekly
+  daily
+}
+
+enum PricingModel {
+  flatrate
+  pay_as_you_go
+  tiering
+  freemium
+  custom
+}
+
+enum UsagePolicies {
+  standard // Standardnutzungsbedingungen
+  special // spezielle Nutzungsbedingungen
+}
+
+enum DataAvailabilities {
+  api
+  data_file
+  ftp
+  realtime
+  others
+  not_specified // keine Angabe
+}
+
+enum DataspaceRoles {
+  data_provider
+  data_consumer
+  service_provider
+}
+
+enum CompanySize {
+  startup
+  microenterprise // Kleinstunternehmen
+  small_business // kleines Unternehmen
+  medium_business // mittleres Unternehmen
+  large_business // großes Unternehmen
+}
+
+enum ServiceLevel {
+  caas
+  paas
+  self_service
+}
+
+enum DeploymentType {
+  edge
+  on_premises
+  cloud
+}
+
+enum ItKnowhow {
+  low
+  medium
+  high
+}
+
+enum Protocol {
+  https
+  idscp_v2
+  neuropil
+  ids_rest
+  multipart
+}
+
+enum CompanyIndustrySector {
+  trade // Handel
+  industry // Industrie
+  media // Medien
+  tourism // Tourismus
+  property // Immobilien
+  healthcare // Gesundheit
+  service // Dienstleistung
+  finance // Finanzwirtschaft
+  science // Forschung
+  others // andere
+}

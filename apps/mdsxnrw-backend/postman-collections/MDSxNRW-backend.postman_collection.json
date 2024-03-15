@@ -1,0 +1,468 @@
+{
+  "info": {
+    "_postman_id": "bb8a8345-d3b1-4103-937a-36005e4793d0",
+    "name": "MDSxNRW",
+    "description": "This is a request collection to test the backend API of the MDSxNRW project for connector recommendation.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "28404599",
+    "_collection_link": "https://gold-shadow-806342.postman.co/workspace/MDSxNRW-Workspace~51d6a12b-b044-41cc-8134-7e56feee512e/collection/25275027-bb8a8345-d3b1-4103-937a-36005e4793d0?action=share&source=collection_link&creator=28404599"
+  },
+  "item": [
+    {
+      "name": "Test Keycloak Works",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "accessTokenUrl": "{{Access Token URL}}",
+            "authUrl": "{{Auth URL}}",
+            "useBrowser": false,
+            "redirect_uri": "",
+            "addTokenTo": "header",
+            "tokenName": "keycloak token"
+          }
+        },
+        "method": "GET",
+        "header": [],
+        "url": "{{Backend-URL}}/api/test/authentication"
+      },
+      "response": []
+    },
+    {
+      "name": "Test CRE (valid Request body)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "clientSecret": "DLKVuzHyhW8DjnnLlrBeYZYHxtFVNRAg",
+            "useBrowser": false,
+            "redirect_uri": "",
+            "addTokenTo": "header",
+            "authUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/auth",
+            "accessTokenUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/token",
+            "clientId": "mdsxnrw-client",
+            "tokenName": "keycloak token"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"companyIndustrySectors\":[\"trade\",\"media\"],\n    \"companyItExpertsFrom\": 4,\n    \"companyItExpertsTo\": 6,\n    \"companyItKnowhow\": \"medium\",\n    \"dataspaceRoles\": [\"data_consumer\",\"service_provider\"],\n    \"serviceLevel\":\"self_service\",\n    \"usagePolicies\": \"standard\",\n    \"companyLocation\": \"Dortmund\",\n    \"companySize\": \"startup\",\n    \"companyType\": \"company\"\n    \n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/cre"
+      },
+      "response": []
+    },
+    {
+      "name": "Test CRE (EDC best)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "clientSecret": "DLKVuzHyhW8DjnnLlrBeYZYHxtFVNRAg",
+            "useBrowser": false,
+            "redirect_uri": "",
+            "addTokenTo": "header",
+            "authUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/auth",
+            "accessTokenUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/token",
+            "clientId": "mdsxnrw-client",
+            "tokenName": "keycloak token"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"companyIndustrySectors\":[\"trade\",\"media\"],\n    \"companyItExpertsFrom\": 20,\n    \"companyItExpertsTo\": 22,\n    \"companyItKnowhow\": \"high\",\n    \"dataspaceRoles\": [\"data_consumer\",\"service_provider\"],\n    \"serviceLevel\":\"self_service\",\n    \"usagePolicies\": \"standard\",\n    \"companyLocation\": \"Dortmund\",\n    \"companySize\": \"startup\",\n    \"companyType\": \"company\"\n    \n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/cre"
+      },
+      "response": []
+    },
+    {
+      "name": "Test CRE (sovity best)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "clientSecret": "DLKVuzHyhW8DjnnLlrBeYZYHxtFVNRAg",
+            "useBrowser": false,
+            "redirect_uri": "",
+            "addTokenTo": "header",
+            "authUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/auth",
+            "accessTokenUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/token",
+            "clientId": "mdsxnrw-client",
+            "tokenName": "keycloak token"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"companyIndustrySectors\":[\"trade\",\"media\"],\n    \"companyItExpertsFrom\": 1,\n    \"companyItExpertsTo\": 1,\n    \"companyItKnowhow\": \"low\",\n    \"dataspaceRoles\": [\"data_consumer\"],\n    \"serviceLevel\":\"caas\",\n    \"usagePolicies\": \"standard\",\n    \"companyLocation\": \"Dortmund\",\n    \"companySize\": \"startup\",\n    \"companyType\": \"company\"\n    \n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/cre"
+      },
+      "response": []
+    },
+    {
+      "name": "Test CRE (invalid Request body) Copy",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "clientSecret": "DLKVuzHyhW8DjnnLlrBeYZYHxtFVNRAg",
+            "useBrowser": false,
+            "redirect_uri": "",
+            "addTokenTo": "header",
+            "authUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/auth",
+            "accessTokenUrl": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/token",
+            "clientId": "mdsxnrw-client",
+            "tokenName": "keycloak token"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"companyIndustrySectors\":[],\n    \"companyItExperts\": \"between_11_to_49_employees\",\n    \"companyItKnowhow\": \"low\",\n    \"companyLocation\": \"Dortmund\",\n    \"companySize\": \"startup\",\n    \"companyType\": \"company\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/cre"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector (valid body)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"connectorDescription\": \"this is a dummy Connector\",\n    \"connectorName\": \"Dummy Connector\",\n    \"connectorMaintainer\": \"ISST\",\n    \"connectorType\": \"data_connector_framework\",\n    \"connectorVersion\": \"1.0\",\n    \"connectorEmail\": \"timon.klann@fraunhofer.de\",\n    \"contactLocation\": \"Dortmund\",\n    \"contactName\": \"Timon\",\n    \"deploymentType\": [\"cloud\"],\n    \"openSource\": \"closedsource\",\n    \"license\": \"apache_2_0\",\n    \"fte\": \"small_team\",\n    \"selfImplementation\": false,\n    \"gui\": false,\n    \"dsSpecificGui\": false,\n    \"cloudNeeded\": false,\n    \"itKnowhow\": \"low\",\n    \"payment\": false,\n    \"regionalRestrictions\": false,\n    \"hasDocumentation\": true,\n    \"hasSupport\": true,\n    \"basedOnODRL\": false,\n    \"usedProtocols\": [\n        \"https\",\"multipart\"\n    ],\n    \"targetDataspaceRoles\":[\"data_provider\"],\n    \"targetIndustrySectors\":[],\n    \"trl\": 2,\n    \"references\": \"...\",\n    \"serviceLevel\": \"caas\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/connector"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector (invalid body - deploymentType empty))",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"connectorDescription\": \"this is a dummy Connector\",\n    \"connectorName\": \"Dummy Connector 4\",\n    \"connectorMaintainer\": \"ISST\",\n    \"connectorType\": \"data_connector_framework\",\n    \"connectorVersion\": \"1.0\",\n    \"connectorEmail\": \"timon.klann@fraunhofer.de\",\n    \"contactLocation\": \"Dortmund\",\n    \"deploymentType\": [],\n    \"contactName\": \"Timon\",\n    \"openSource\": \"closedsource\",\n    \"license\": \"apache_2_0\",\n    \"fte\": \"small_team\",\n    \"selfImplementation\": false,\n    \"gui\": false,\n    \"dsSpecificGui\": false,\n    \"cloudNeeded\": false,\n    \"targetGroup\": \"People\",\n    \"itKnowhow\": \"low\",\n    \"payment\": false,\n    \"regionalRestrictions\": false,\n    \"hasDocumentation\": true,\n    \"hasSupport\": true,\n    \"industryFocus\": true,\n    \"basedOnODRL\": false,\n    \"hasSpecialUsagePolicies\": false,\n    \"usedProtocols\": [\n        \"https\",\n        \"multipart\"\n    ],\n    \"onlyCL\": false,\n    \"tlr\": 2,\n    \"references\": \"...\",\n    \"serviceLevel\": \"caas\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/connector"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector (invalid body - email)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"connectorDescription\": \"this is a dummy Connector\",\n    \"connectorName\": \"Dummy Connector\",\n    \"connectorMaintainer\": \"ISST\",\n    \"connectorType\": \"data_connector_framework\",\n    \"connectorVersion\": \"1.0\",\n    \"connectorEmail\": \"timon.klann@fraunhofer\",\n    \"contactLocation\": \"Dortmund\",\n    \"contactName\": \"Timon\",\n    \"deploymentType\": [\"cloud\"],\n    \"openSource\": \"closedsource\",\n    \"license\": \"apache_2_0\",\n    \"fte\": \"small_team\",\n    \"selfImplementation\": false,\n    \"gui\": false,\n    \"dsSpecificGui\": false,\n    \"cloudNeeded\": false,\n    \"targetGroup\": \"People\",\n    \"itKnowhow\": \"low\",\n    \"payment\": false,\n    \"regionalRestrictions\": false,\n    \"hasDocumentation\": true,\n    \"hasSupport\": true,\n    \"industryFocus\": true,\n    \"basedOnODRL\": false,\n    \"hasSpecialUsagePolicies\": false,\n    \"usedProtocols\": [\n        \"https\",\"multipart\"\n    ],\n    \"onlyCL\": false,\n    \"tlr\": 2,\n    \"references\": \"...\",\n    \"serviceLevel\": \"caas\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/connector"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector (invalid body)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"connectorDescription\": \"this is a dummy Connector\",\n    \"connectorName\": \"Dummy Connector\",\n    \"connectorMaintainer\": \"ISST\",\n    \"connectorType\": \"data_connector_framework\",\n    \"connectorVersion\": \"1.0\",\n    \"connectorEmail\": \"timon.klann@fraunhofer.de\",\n    \"contactLocation\": \"Dortmund\",\n    \"contactName\": \"Timon\",\n    \"deploymentType\": [],\n    \"openSource\": \"closedsource\",\n    \"license\": \"apache_2_0\",\n    \"fte\": \"small_team\",\n    \"selfImplementation\": false,\n    \"gui\": false,\n    \"dsSpecificGui\": false,\n    \"cloudNeeded\": false,\n    \"targetGroup\": \"People\",\n    \"itKnowhow\": \"low\",\n    \"payment\": false,\n    \"regionalRestrictions\": false,\n    \"hasDocumentation\": true,\n    \"hasSupport\": true,\n    \"industryFocus\": true,\n    \"basedOnODRL\": false,\n    \"hasSpecialUsagePolicies\": false,\n    \"usedProtocols\": [\n        \"https\",\"multipart\"\n    ],\n    \"onlyCL\": false,\n    \"tlr\": 2,\n    \"references\": \"...\",\n    \"serviceLevel\": \"caas\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/connector"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector (valid body)",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"targetIndustrySectors\":[]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/connector/1"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector (invalid body - email))",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"connectorEmail\":\"timon.klann.isst.fraunhofer.de\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/connector/1"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector",
+      "request": {
+        "auth": {
+          "type": "oauth2",
+          "oauth2": {
+            "refreshRequestParams": [],
+            "tokenRequestParams": [],
+            "authRequestParams": [],
+            "tokenName": "keycloak token",
+            "challengeAlgorithm": "S256",
+            "grant_type": "authorization_code",
+            "clientSecret": "{{Client Secret}}",
+            "clientId": "{{client ID}}",
+            "authUrl": "{{Auth URL}}",
+            "addTokenTo": "header",
+            "client_authentication": "header",
+            "accessTokenUrl": "{{Access Token URL}}"
+          }
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": "{{Backend-URL}}/api/connector/4"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{Backend-URL}}/api/connector/"
+      },
+      "response": []
+    },
+    {
+      "name": "Test Recommendation",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"connectors\": [\n        {\n            \"id\": 1,\n            \"connectorDescription\": \"Whatever the individual setup is – on-premises bare-metal, different cloud vendors, hybrid, even single end-user machines – the EDC can be customized to work within any environment at scale. The connector’s added value is achieved through the separation of control and data plane, which enables a modular and thereby customizable way to build data spaces. Due to common interfaces and mapping of existing standards, the connector adds capabilities of contract negotiating and policy handling in an interoperable manner. As an open-source project hosted by the Eclipse Foundation, it provides a growing list of modules for many widely deployed cloud environments “out-of-the-box” and can easily be extended for more customized environments, while avoiding any intellectual property rights (IPR) headaches.\",\n            \"connectorLogo\": null,\n            \"connectorName\": \"Eclipse Dataspace Components Connector\",\n            \"connectorMaintainer\": \"Commiter Group in Eclipse Foundation\",\n            \"connectorType\": \"data_connector_framework\",\n            \"connectorVersion\": \"0.1.2\",\n            \"connectorWebsite\": \"https://projects.eclipse.org/projects/technology.edc\",\n            \"connectorEmail\": \"edc-community@eclipse.org\",\n            \"contactForename\": \"Markus\",\n            \"contactLocation\": \"Dortmund\",\n            \"contactName\": \"Spiekermann\",\n            \"deploymentType\": [\n                \"edge\",\n                \"cloud\",\n                \"on_premises\"\n            ],\n            \"durationFrom\": 4,\n            \"durationTo\": 6,\n            \"durationUnit\": \"months\",\n            \"openSource\": \"opensource\",\n            \"license\": \"apache_2_0\",\n            \"fte\": \"department\",\n            \"selfImplementation\": true,\n            \"gui\": false,\n            \"dsSpecificGui\": true,\n            \"cloudNeeded\": false,\n            \"cloud\": null,\n            \"targetIndustrySectors\": [\n                \"trade\",\n                \"industry\",\n                \"media\",\n                \"tourism\",\n                \"property\",\n                \"healthcare\",\n                \"service\",\n                \"finance\",\n                \"science\",\n                \"others\"\n            ],\n            \"targetDataspaceRoles\": [\n                \"data_consumer\",\n                \"data_provider\",\n                \"service_provider\"\n            ],\n            \"itKnowhow\": \"high\",\n            \"payment\": false,\n            \"pricingModel\": null,\n            \"price\": null,\n            \"paymentInterval\": null,\n            \"abonnementDescription\": null,\n            \"costCalculationBasis\": null,\n            \"tier1Cost\": null,\n            \"tier1PaymentInterval\": null,\n            \"tier1AbonnementDescription\": null,\n            \"tier2Cost\": null,\n            \"tier2PaymentInterval\": null,\n            \"tier2AbonnementDescription\": null,\n            \"tier3Cost\": null,\n            \"tier3PaymentInterval\": null,\n            \"tier3AbonnementDescription\": null,\n            \"tier4Cost\": null,\n            \"tier4PaymentInterval\": null,\n            \"tier4AbonnementDescription\": null,\n            \"tier5Cost\": null,\n            \"tier5PaymentInterval\": null,\n            \"tier5AbonnementDescription\": null,\n            \"regionalRestrictions\": false,\n            \"hasDocumentation\": true,\n            \"hasSupport\": true,\n            \"basedOnODRL\": true,\n            \"alternativePolicyExpressionModel\": null,\n            \"usedProtocols\": [\n                \"https\",\n                \"idscp_v2\"\n            ],\n            \"trl\": 9,\n            \"references\": \"Catena-X; Eona-X; Health-X DataLOFT\",\n            \"serviceLevel\": \"self_service\"\n        },\n        {\n            \"id\": 2,\n            \"connectorDescription\": \"The easiest access to sovereign data exchange with Connector-as-a-Service: Industry-ready Connector based on open-source software Eclipse Dataspace Components (EDC). The sovity Connector is used as managed solution compliant with key data space initiatives like IDSA, Catena-X or Mobility Data Space.\",\n            \"connectorLogo\": null,\n            \"connectorName\": \"sovity Connector\",\n            \"connectorMaintainer\": \"sovity GmbH\",\n            \"connectorType\": \"off_the_shelf_solution\",\n            \"connectorVersion\": \"1.0\",\n            \"connectorWebsite\": \"https://sovity.de/\",\n            \"connectorEmail\": \"contact@sovity.de\",\n            \"contactForename\": \"Sebastian\",\n            \"contactLocation\": \"Dortmund\",\n            \"contactName\": \"Kleff\",\n            \"deploymentType\": [\n                \"cloud\"\n            ],\n            \"durationFrom\": 1,\n            \"durationTo\": 1,\n            \"durationUnit\": \"days\",\n            \"openSource\": \"closedsource\",\n            \"license\": \"apache_2_0\",\n            \"fte\": \"single_person\",\n            \"selfImplementation\": false,\n            \"gui\": true,\n            \"dsSpecificGui\": false,\n            \"cloudNeeded\": false,\n            \"cloud\": null,\n            \"targetIndustrySectors\": [\n                \"trade\",\n                \"industry\",\n                \"media\",\n                \"tourism\",\n                \"property\",\n                \"healthcare\",\n                \"service\",\n                \"finance\",\n                \"science\",\n                \"others\"\n            ],\n            \"targetDataspaceRoles\": [\n                \"data_consumer\",\n                \"data_provider\"\n            ],\n            \"itKnowhow\": \"low\",\n            \"payment\": true,\n            \"pricingModel\": null,\n            \"price\": null,\n            \"paymentInterval\": null,\n            \"abonnementDescription\": null,\n            \"costCalculationBasis\": null,\n            \"tier1Cost\": null,\n            \"tier1PaymentInterval\": null,\n            \"tier1AbonnementDescription\": null,\n            \"tier2Cost\": null,\n            \"tier2PaymentInterval\": null,\n            \"tier2AbonnementDescription\": null,\n            \"tier3Cost\": null,\n            \"tier3PaymentInterval\": null,\n            \"tier3AbonnementDescription\": null,\n            \"tier4Cost\": null,\n            \"tier4PaymentInterval\": null,\n            \"tier4AbonnementDescription\": null,\n            \"tier5Cost\": null,\n            \"tier5PaymentInterval\": null,\n            \"tier5AbonnementDescription\": null,\n            \"regionalRestrictions\": false,\n            \"hasDocumentation\": true,\n            \"hasSupport\": true,\n            \"basedOnODRL\": true,\n            \"alternativePolicyExpressionModel\": null,\n            \"usedProtocols\": [\n                \"idscp_v2\"\n            ],\n            \"trl\": 9,\n            \"references\": \"Mobility Data Space; Catena-X; IDSA Testbed; Demand and capacity app\",\n            \"serviceLevel\": \"caas\"\n        },\n        {\n            \"id\": 3,\n            \"connectorDescription\": \"Based on the Eclipse Data Connector (EDC) – an up-andcoming, extensible connector development framework. We provide managed EDC service which is compliant with IDSA specification as well as DSC.\",\n            \"connectorLogo\": null,\n            \"connectorName\": \"Data Intelligence Hub Connector\",\n            \"connectorMaintainer\": \"T-Systems International GmbH\",\n            \"connectorType\": \"off_the_shelf_solution\",\n            \"connectorVersion\": \"4.1.3\",\n            \"connectorWebsite\": \"https://dih.telekom.net/\",\n            \"connectorEmail\": \"info@t-systems.com\",\n            \"contactForename\": \"Sven\",\n            \"contactLocation\": \"Frankfurt am Main\",\n            \"contactName\": \"Löffler\",\n            \"deploymentType\": [\n                \"cloud\"\n            ],\n            \"durationFrom\": 1,\n            \"durationTo\": 1,\n            \"durationUnit\": \"days\",\n            \"openSource\": \"closedsource\",\n            \"license\": \"apache_2_0\",\n            \"fte\": \"single_person\",\n            \"selfImplementation\": false,\n            \"gui\": true,\n            \"dsSpecificGui\": false,\n            \"cloudNeeded\": true,\n            \"cloud\": \"mycloud\",\n            \"targetIndustrySectors\": [\n                \"trade\",\n                \"industry\",\n                \"media\",\n                \"tourism\",\n                \"property\",\n                \"healthcare\",\n                \"service\",\n                \"finance\",\n                \"science\",\n                \"others\"\n            ],\n            \"targetDataspaceRoles\": [\n                \"data_consumer\",\n                \"data_provider\"\n            ],\n            \"itKnowhow\": \"low\",\n            \"payment\": true,\n            \"pricingModel\": null,\n            \"price\": null,\n            \"paymentInterval\": null,\n            \"abonnementDescription\": null,\n            \"costCalculationBasis\": null,\n            \"tier1Cost\": null,\n            \"tier1PaymentInterval\": null,\n            \"tier1AbonnementDescription\": null,\n            \"tier2Cost\": null,\n            \"tier2PaymentInterval\": null,\n            \"tier2AbonnementDescription\": null,\n            \"tier3Cost\": null,\n            \"tier3PaymentInterval\": null,\n            \"tier3AbonnementDescription\": null,\n            \"tier4Cost\": null,\n            \"tier4PaymentInterval\": null,\n            \"tier4AbonnementDescription\": null,\n            \"tier5Cost\": null,\n            \"tier5PaymentInterval\": null,\n            \"tier5AbonnementDescription\": null,\n            \"regionalRestrictions\": false,\n            \"hasDocumentation\": true,\n            \"hasSupport\": true,\n            \"basedOnODRL\": true,\n            \"alternativePolicyExpressionModel\": null,\n            \"usedProtocols\": [\n                \"idscp_v2\"\n            ],\n            \"trl\": 9,\n            \"references\": \"GAIA-X 4 Future Mobility\",\n            \"serviceLevel\": \"caas\"\n        }\n    ],\n    \"recommendationScores\": [\n        0.05962882474318132,\n        0.821678743313883,\n        0.43832536655126497\n    ],\n    \"args\": [\n        []\n    ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{Backend-URL}}/api/cre/test"
+      },
+      "response": []
+    },
+    {
+      "name": "Connector Onboarding",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "Auth URL",
+      "value": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/auth"
+    },
+    {
+      "key": "Access Token URL",
+      "value": "http://localhost:8090/realms/mdsxnrw-realm/protocol/openid-connect/token"
+    },
+    {
+      "key": "client ID",
+      "value": "mdsxnrw-client"
+    },
+    {
+      "key": "Client Secret",
+      "value": "DLKVuzHyhW8DjnnLlrBeYZYHxtFVNRAg"
+    },
+    {
+      "key": "Backend-URL",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
